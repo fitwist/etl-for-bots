@@ -38,4 +38,10 @@ t2 = BashOperator(
       retries=2
 )
 
-t1 >> t2 >> t3 >> send_telegram_message
+t1 >> t2 >> t3 >> t4 >> TelegramOperator(
+    task_id="send_telegram_message",
+    token="<telegram_bot_token>",
+    chat_id="<chat_id>",
+    trigger_rule=TriggerRule.ONE_FAILED,
+    text="Группа чат-бота: одна из ежедневных выгрузок не выполнена. Проверь логи (Recent Tasks / Failed / Task Id / Log)."
+)
